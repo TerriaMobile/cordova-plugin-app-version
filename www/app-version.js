@@ -40,6 +40,14 @@ var RareloopAppVersion = function () {
     var _this = this;
 
     channel.onCordovaReady.subscribe(function() {
+        if(typeof device !== 'undefined' && device.platform === 'browser') {
+            _this.available = true;
+            _this.version = null;
+            _this.build = null;
+
+            channel.onCordovaAppVersionReady.fire();
+            return;
+        }
         _this.getInfo(function(info) {
             _this.available = true;
 
@@ -49,7 +57,7 @@ var RareloopAppVersion = function () {
             channel.onCordovaAppVersionReady.fire();
         },function(e) {
             _this.available = false;
-            utils.alert("[ERROR] Error initializing Version Plugin: " + e);
+            console.error("[ERROR] Error initializing Version Plugin: " + e);
         });
     });
 };
