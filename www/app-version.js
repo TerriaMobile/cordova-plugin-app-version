@@ -41,6 +41,7 @@ var RareloopAppVersion = function () {
 
     channel.onCordovaReady.subscribe(function() {
         var isDevice = document.URL.startsWith('file') || document.URL.indexOf('http://localhost:8080') === 0;
+        isDevice = isDevice || ['ios', 'android'].indexOf(cordova.platformId) > -1;
         if(!isDevice) {
             _this.available = true;
             _this.version = null;
